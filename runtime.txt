@@ -1,21 +1,17 @@
-python# Use an official Python runtime as a parent image
-FROM python:3.9-slim
+# Dockerfile
+FROM python:3.11-slim
 
-# Set the working directory in the container
 WORKDIR /app
-
-# Copy the requirements file into the container at /app
-COPY requirements.txt /app/
-
-# Install any needed packages specified in requirements.txt
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
 
-# Copy the rest of the working directory contents into the container at /app
-COPY . /app
+# optional but nice: silence .pyc and buffer
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
 
-# Make port 8080 available to the world outside this container
-EXPOSE 8080
+# Railway will inject PORT; default to 8080 for local runs
+ENV PORT=8080
 
-
-# Run the command to start Gunicorn
-CMD ["gunicorn", "myProject.wsgi:application", "--bind", "0.0.0.0:8080"]
+# Collect static (safe if nothing to collect) then bind to $PORT
+CMD ["sh","-c","python manage.py collectstatic --noinput || true && gunicorn myProject.wsgi:application --bind 0.0.0.0:${PORT} --log-file -"]
