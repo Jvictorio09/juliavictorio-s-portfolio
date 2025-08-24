@@ -1,1 +1,1 @@
-web: gunicorn myProject.wsgi
+web: sh -c "python manage.py migrate && python manage.py collectstatic --noinput && gunicorn myProject.wsgi:application --bind 0.0.0.0:$PORT --workers 3 --threads 4 --timeout 60 --graceful-timeout 60 --keep-alive 30 --log-file -"
