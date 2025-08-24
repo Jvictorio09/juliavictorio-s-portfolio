@@ -31,21 +31,21 @@ def env_int(key: str, default: int) -> int:
 SECRET_KEY = 'django-insecure-iohq7zpxz8(&dh%ydkz_8apegi*#7*#0es488cu1th1hjhgj!t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = os.getenv(
-    "ALLOWED_HOSTS",
-    "localhost,127.0.0.1,[::1],.railway.app,juliavictorio-s-portfolio-production.up.railway.app"
-).split(",")
+# settings.py
+import os
 
-# CSRF needs full scheme+host
-CSRF_TRUSTED_ORIGINS = [
-    "https://juliavictorio-s-portfolio-production.up.railway.app",
-    "https://*.railway.app",
-    "http://localhost", "https://localhost",
-    "http://127.0.0.1", "https://127.0.0.1",
+ALLOWED_HOSTS = [
+    '*',
+    'localhost',
+    '127.0.0.1',
+    'juliavictorio-s-portfolio-production.up.railway.app'
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://juliavictorio-s-portfolio-production.up.railway.app",
+]
 
 # Application definition
 

@@ -1,17 +1,1 @@
-# Dockerfile
-FROM python:3.11-slim
-
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-
-# optional but nice: silence .pyc and buffer
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
-
-# Railway will inject PORT; default to 8080 for local runs
-ENV PORT=8080
-
-# Collect static (safe if nothing to collect) then bind to $PORT
-CMD ["sh","-c","python manage.py collectstatic --noinput || true && gunicorn myProject.wsgi:application --bind 0.0.0.0:${PORT} --log-file -"]
+python-3.11-slim
