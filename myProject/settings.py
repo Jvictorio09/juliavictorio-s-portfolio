@@ -31,10 +31,13 @@ def env_int(key: str, default: int) -> int:
 SECRET_KEY = 'django-insecure-iohq7zpxz8(&dh%ydkz_8apegi*#7*#0es488cu1th1hjhgj!t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # settings.py
 import os
+
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 ALLOWED_HOSTS = [
     '*',
